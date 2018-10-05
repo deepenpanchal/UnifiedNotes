@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Noted</string>
+    <string name="authError">Error Logging in, check your email address and password!</string>
+</resources>
