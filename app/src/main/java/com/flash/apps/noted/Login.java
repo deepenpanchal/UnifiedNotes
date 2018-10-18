@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity {
 
         if (firebaseAuth.getCurrentUser()!=null)
         {
-            startActivity(new Intent(Login.this, CreateNote.class));
+            startActivity(new Intent(Login.this, MainActivity.class));
         }
 
         clickHere.setOnClickListener(new View.OnClickListener() {
@@ -248,7 +248,7 @@ public class Login extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            startActivity(new Intent(Login.this, CreateNote.class));
+                            startActivity(new Intent(Login.this, MainActivity.class));
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
