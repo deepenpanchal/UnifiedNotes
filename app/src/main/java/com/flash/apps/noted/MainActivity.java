@@ -1,5 +1,6 @@
 package com.flash.apps.noted;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,20 +28,20 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.note_page);
         gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         mNotesList = findViewById(R.id.main_notes_list);
         mNotesList.setHasFixedSize(true);
         mNotesList.setLayoutManager(gridLayoutManager);
         fAuth = FirebaseAuth.getInstance();
-        if(fAuth.getCurrentUser() != null){
+        if (fAuth.getCurrentUser() != null) {
             ourNotesDatabase = FirebaseDatabase.getInstance().getReference().child("Notes").child(fAuth.getCurrentUser().getUid());
         }
-        setContentView(R.layout.create_note);
+        loadData();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+
+    public void loadData() {
         FirebaseRecyclerOptions<NoteModel> options = new FirebaseRecyclerOptions.Builder<NoteModel>()
                 .setQuery(ourNotesDatabase, NoteModel.class).build();
         FirebaseRecyclerAdapter<NoteModel, NoteViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<NoteModel, NoteViewHolder>(options) {
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             protected void onBindViewHolder(final NoteViewHolder holder, int position, @NonNull NoteModel model) {
-                String noteId = getRef(position).getKey();
+                final String noteId = getRef(position).getKey();
                 ourNotesDatabase.child(noteId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,6 +64,14 @@ public class MainActivity extends AppCompatActivity{
                         String content = dataSnapshot.child("content").getValue().toString();
                         holder.setNoteTitle(title);
                         holder.setNoteContent(content);
+                        holder.noteCard.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(MainActivity.this, CreateNote.class);
+                                intent.putExtra("NoteID", noteId);
+                                startActivity(intent);
+                            }
+                        });
 
                     }
 
