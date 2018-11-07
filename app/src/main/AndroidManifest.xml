@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.flash.apps.noted">
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,25 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"/>
-
+        <activity android:name=".Activity.MainActivity" />
         <activity
-            android:name=".Dashboard"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".CreateNote"
-            android:parentActivityName=".Dashboard" />
-        <activity android:name=".Login">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:name=".Activity.Dashboard"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.CreateNote"
+            android:parentActivityName=".Activity.Dashboard" />
+        <activity android:name=".Activity.Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-        <activity android:name=".Register" />
-        <activity android:name=".ForgotPass"></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.Register" />
+        <activity android:name=".Activity.ForgotPass" />
         <activity android:name="com.evernote.client.android.EvernoteOAuthActivity" />
-        <activity android:name="com.evernote.client.android.login.EvernoteLoginActivity"/>
+        <activity android:name="com.evernote.client.android.login.EvernoteLoginActivity" />
+        <activity
+            android:name=".Activity.NoteBoard"
+            android:label="@string/title_activity_note_board"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.EvernoteNB"></activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
